@@ -49,7 +49,14 @@ Proper case and evidence management software — the kind with role-based access
    ```bash
     pip install -r requirements.txt
    ```
-   
+   > **On Debian/Ubuntu/Kali (Python 3.11+):** you may see `error: externally-managed-environment`. This happens because newer Debian-based systems block system-wide pip installs by default. Use a virtual environment instead:
+   > ```bash
+   > python3 -m venv venv
+   > source venv/bin/activate
+   > pip install -r requirements.txt
+   > ```
+   > If `python3 -m venv` fails, install it first with `sudo apt install python3-venv`, then retry. Remember to run `source venv/bin/activate` again each time you open a new terminal, before running the app.
+
 3. **Initialize the database** (if starting fresh):
 
    SecureTracker uses the SQLite command-line tool to build the schema. Verify it's installed:
