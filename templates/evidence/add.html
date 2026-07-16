@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Add Evidence
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Add Evidence</h1>
+<p class="text-muted">
+    Case: <strong>{{ case.case_number }}</strong> - {{ case.title }}
+</p>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">
+            Evidence Name
+        </label>
+        <input type="text" class="form-control" name="name" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Description
+        </label>
+        <textarea class="form-control" name="description" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Evidence Type
+        </label>
+        <input type="text" class="form-control" name="evidence_type" placeholder="e.g. Document, Image, Video">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            File
+        </label>
+        <input type="file" class="form-control" name="file">
+    </div>
+
+    <button type="submit" class="btn btn-dark">
+        Upload Evidence
+    </button>
+    <a href="/cases/{{ case.id }}" class="btn btn-outline-secondary ms-2">
+        Cancel
+    </a>
+</form>
+{% endblock %}

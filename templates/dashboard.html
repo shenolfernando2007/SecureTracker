@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    Welcome back, {{ username }}!
+</h2>
+
+<div class="row g-3 mb-4">
+
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Total Cases
+                </h5>
+                <p class="card-text display-6">
+                    {{ statistics.total_cases }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Active Cases
+                </h5>
+                <p class="card-text display-6">
+                    {{ statistics.active_cases }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Evidence Files
+                </h5>
+                <p class="card-text display-6">
+                    {{ statistics.total_evidence }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Total Users
+                </h5>
+                <p class="card-text display-6">
+                    {{ statistics.total_users }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Recent Cases</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if recent_cases %}
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>Case #</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for case in recent_cases %}
+                            <tr>
+                                <td>
+                                    <a href="/cases/{{ case.id }}">
+                                        {{ case.case_number }}
+                                    </a>
+                                </td>
+                                <td>{{ case.title }}</td>
+                                <td>{{ case.status }}</td>
+                                <td>{{ case.priority }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted p-3 mb-0">
+                    No cases yet.
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Recent Activity</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if activity %}
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in activity %}
+                            <tr>
+                                <td>{{ entry.username }}</td>
+                                <td>{{ entry.description }}</td>
+                                <td>{{ entry.timestamp }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted p-3 mb-0">
+                    No activity yet.
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Cases
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Cases</h1>
+    <a href="/cases/create" class="btn btn-dark">
+        New Case
+    </a>
+</div>
+
+<form method="GET" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <input type="text" class="form-control" name="search" placeholder="Search cases..."
+            value="{{ request.args.get('search', '') }}">
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" name="status">
+            <option value="">All Statuses</option>
+            {% for s in ["Open","Active Investigation","Pending Review","Closed"] %}
+            <option value="{{ s }}" {{ 'selected' if request.args.get('status')==s else '' }}>
+                {{ s }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <select class="form-select" name="priority">
+            <option value="">All Priorities</option>
+            {% for p in ["Low","Medium","High","Critical"] %}
+            <option value="{{ p }}" {{ 'selected' if request.args.get('priority')==p else '' }}>
+                {{ p }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-dark w-100">
+            Filter
+        </button>
+    </div>
+</form>
+
+<div class="card">
+    <div class="card-body p-0">
+        {% if cases %}
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Case #</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Assigned To</th>
+                        <th>Created</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for case in cases %}
+                    <tr>
+                        <td>
+                            <a href="/cases/{{ case.id }}">
+                                {{ case.case_number }}
+                            </a>
+                        </td>
+                        <td>{{ case.title }}</td>
+                        <td>{{ case.status }}</td>
+                        <td>{{ case.priority }}</td>
+                        <td>{{ case.investigator_name or 'Unassigned' }}</td>
+                        <td>{{ case.created_at }}</td>
+                        <td>
+                            <a href="/cases/{{ case.id }}" class="btn btn-sm btn-outline-primary">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+
+        <p class="text-muted p-3 mb-0">
+            No cases found.
+        </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

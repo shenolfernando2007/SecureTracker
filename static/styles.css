@@ -1,0 +1,43 @@
+/* SecureTracker styles.css */
+/* Custom styles on top of Bootstrap */
+
+/* base */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f8f9fa; /* light gray bg for whole app */
+}
+
+/* login and register pages */
+.auth-container {
+    min-height: 80vh; /* center card vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-card {
+    width: 420px;
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* subtle shadow */
+}
+
+/* reusable components */
+.card {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden; /* make rounded corners work on table */
+}
+
+/* navbar */
+.navbar-brand {
+    letter-spacing: 1px;
+    font-weight: 600;
+}

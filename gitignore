@@ -1,0 +1,25 @@
+# Database
+*.db
+*.db-journal
+
+# Uploaded evidence files
+uploads/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Flask session files
+flask_session/
+
+# Environment variables
+.env
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,8 @@
+# SecureTracker requirements.txt
+# Install with: pip install -r requirements.txt
+
+Flask==3.1.2         # web framework
+Flask-Session==0.8.0 # server-side sessions
+Flask-WTF==1.2.2     # forms and CSRF protection
+Werkzeug==3.1.3      # WSGI utilities used by Flask
+cs50==9.4.0          # CS50 SQL library

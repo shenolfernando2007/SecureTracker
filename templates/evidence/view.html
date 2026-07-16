@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Evidence {{ evidence.name }}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">{{ evidence.name }}</h1>
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Evidence Details</h5>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Case</dt>
+            <dd class="col-sm-9">
+                <a href="/cases/{{ evidence.case_id }}">
+                    View Case
+                </a>
+            </dd>
+
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">{{ evidence.description or 'N/A' }}</dd>
+            <dt class="col-sm-3">Type</dt>
+            <dd class="col-sm-9">{{ evidence.evidence_type or 'N/A' }}</dd>
+
+            <dt class="col-sm-3">Original Filename</dt>
+            <dd class="col-sm-9">{{ evidence.original_filename or 'N/A' }}</dd>
+            <dt class="col-sm-3">SHA-256 Hash</dt>
+            <dd class="col-sm-9">
+                <code>{{ evidence.file_hash or 'N/A' }}</code>
+            </dd>
+            <dt class="col-sm-3">Uploaded By</dt>
+            <dd class="col-sm-9">{{ evidence.username }}</dd>
+            <dt class="col-sm-3">Uploaded At</dt>
+            <dd class="col-sm-9">{{ evidence.uploaded_at }}</dd>
+        </dl>
+        {% if evidence.file_path %}
+        <a href="/evidence/{{ evidence.id }}/download" class="btn btn-dark">
+            Download Evidence
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Chain of Custody</h5>
+    </div>
+    <div class="card-body p-0">
+        {% if custody %}
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Performed By</th>
+                        <th>Remarks</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in custody %}
+                    <tr>
+                        <td>{{ entry.action }}</td>
+                        <td>{{ entry.username }}</td>
+                        <td>{{ entry.remarks or 'N/A' }}</td>
+                        <td>{{ entry.timestamp }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-muted p-3 mb-0">
+            No custody records.
+        </p>
+        {% endif %}
+    </div>
+</div>
+
+<form method="POST" action="/evidence/{{ evidence.id }}/custody" class="card">
+    <div class="card-header">
+        <h5>Add Custody Record</h5>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <label class="form-label">
+                Action
+            </label>
+
+            <select class="form-select" name="action" required>
+                <option value="TRANSFER">Transfer</option>
+                <option value="REVIEW">Review</option>
+                <option value="ANALYSIS">Analysis</option>
+                <option value="ARCHIVE">Archive</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">
+                Remarks
+            </label>
+            <input type="text" class="form-control" name="remarks" placeholder="Optional remarks">
+        </div>
+
+        <button type="submit" class="btn btn-dark">
+            Add Record
+        </button>
+    </div>
+</form>
+{% endblock %}

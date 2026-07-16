@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Case {{ case.case_number }}
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>
+        Case {{ case.case_number }}
+    </h1>
+    <div>
+        <a href="/cases/{{ case.id }}/edit" class="btn btn-outline-primary me-2">
+            Edit
+        </a>
+
+        <form method="POST" action="/cases/{{ case.id }}/close" class="d-inline">
+            <button type="submit" class="btn btn-outline-success me-2">
+                Close Case
+            </button>
+        </form>
+
+        <form method="POST" action="/cases/{{ case.id }}/delete" class="d-inline"
+            onsubmit="return confirm('Delete this case?')">
+            <button type="submit" class="btn btn-outline-danger">
+                Delete
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="card mb-4">
+
+    <div class="card-header">
+        <h5>Case Details</h5>
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Title</dt>
+            <dd class="col-sm-9">{{ case.title }}</dd>
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">{{ case.description }}</dd>
+            <dt class="col-sm-3">Category</dt>
+            <dd class="col-sm-9">{{ case.category }}</dd>
+            <dt class="col-sm-3">Priority</dt>
+            <dd class="col-sm-9">{{ case.priority }}</dd>
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">{{ case.status }}</dd>
+            <dt class="col-sm-3">Created By</dt>
+            <dd class="col-sm-9">{{ case.created_by }}</dd>
+            <dt class="col-sm-3">Assigned To</dt>
+            <dd class="col-sm-9">{{ case.assigned_to or 'Unassigned' }}</dd>
+            <dt class="col-sm-3">Created At</dt>
+            <dd class="col-sm-9">{{ case.created_at }}</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Evidence</h5>
+        <a href="/evidence/case/{{ case.id }}/add" class="btn btn-dark btn-sm">
+            Add Evidence
+        </a>
+    </div>
+    <div class="card-body p-0">
+        {% if evidence %}
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Uploaded</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in evidence %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.evidence_type or 'N/A' }}</td>
+                        <td>{{ item.uploaded_at }}</td>
+                        <td>
+                            <a href="/evidence/{{ item.id }}" class="btn btn-sm btn-outline-primary">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-muted p-3 mb-0">
+            No evidence uploaded.
+        </p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Notes</h5>
+    </div>
+
+    <div class="card-body">
+        <form method="POST" action="/cases/{{ case.id }}/notes" class="mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control" name="note" placeholder="Add a note..." required>
+                <button type="submit" class="btn btn-dark">
+                    Add Note
+                </button>
+            </div>
+        </form>
+        {% if notes %}
+        <ul class="list-group">
+            {% for note in notes %}
+            <li class="list-group-item">
+                <strong>{{ note.username }}</strong> - {{ note.created_at }}
+                <p class="mb-0 mt-1">{{ note.note }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+
+        <p class="text-muted mb-0">
+            No notes yet.
+        </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

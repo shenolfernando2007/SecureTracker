@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Evidence
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Evidence</h1>
+<div class="card">
+    <div class="card-body p-0">
+        {% if evidence %}
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Case</th>
+                        <th>Type</th>
+                        <th>Uploaded By</th>
+                        <th>Uploaded At</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in evidence %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>
+                            <a href="/cases/{{ item.case_id }}">
+                                {{ item.case_number }}
+                            </a>
+                        </td>
+                        <td>{{ item.evidence_type or 'N/A' }}</td>
+                        <td>{{ item.username }}</td>
+                        <td>{{ item.uploaded_at }}</td>
+                        <td>
+                            <a href="/evidence/{{ item.id }}" class="btn btn-sm btn-outline-primary">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+
+        <p class="text-muted p-3 mb-0">
+            No evidence uploaded.
+        </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

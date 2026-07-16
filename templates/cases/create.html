@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Create Case
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Create Case</h1>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">
+            Title
+        </label>
+        <input type="text" class="form-control" name="title" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">
+            Description
+        </label>
+        <textarea class="form-control" name="description" rows="4" required></textarea>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">
+                Category
+            </label>
+            <input type="text" class="form-control" name="category" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">
+                Priority
+            </label>
+            <select class="form-select" name="priority" required>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Assign To
+        </label>
+
+        <select class="form-select" name="assigned_to">
+            <option value="">Unassigned</option>
+            {% for inv in investigators %}
+            <option value="{{ inv.id }}">
+                {{ inv.username }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-dark">
+        Create Case
+    </button>
+
+    <a href="/cases" class="btn btn-outline-secondary ms-2">
+        Cancel
+    </a>
+</form>
+{% endblock %}

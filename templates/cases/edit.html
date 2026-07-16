@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Case {{ case.case_number }}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Edit Case {{ case.case_number }}</h1>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">
+            Title
+        </label>
+        <input type="text" class="form-control" name="title" value="{{ case.title }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">
+            Description
+        </label>
+        <textarea class="form-control" name="description" rows="4" required>{{ case.description }}</textarea>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">
+                Category
+            </label>
+            <input type="text" class="form-control" name="category" value="{{ case.category }}" required>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">
+                Priority
+            </label>
+
+            <select class="form-select" name="priority" required>
+                <option value="Low" {{ 'selected' if case.priority=='Low' else '' }}>Low</option>
+                <option value="Medium" {{ 'selected' if case.priority=='Medium' else '' }}>Medium</option>
+                <option value="High" {{ 'selected' if case.priority=='High' else '' }}>High</option>
+                <option value="Critical" {{ 'selected' if case.priority=='Critical' else '' }}>Critical</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Assign To
+        </label>
+
+        <select class="form-select" name="assigned_to">
+            <option value="">Unassigned</option>
+            {% for inv in investigators %}
+            <option value="{{ inv.id }}" {{ 'selected' if case.assigned_to==inv.id else '' }}>
+                {{ inv.username }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-dark">
+        Update Case
+    </button>
+    <a href="/cases/{{ case.id }}" class="btn btn-outline-secondary ms-2">
+        Cancel
+    </a>
+</form>
+{% endblock %}

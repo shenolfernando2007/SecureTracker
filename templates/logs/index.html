@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Audit Logs
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Audit Logs</h1>
+<form method="GET" class="row g-3 mb-4">
+    <div class="col-md-8">
+        <input type="text" class="form-control" name="search" placeholder="Search logs..."
+            value="{{ request.args.get('search', '') }}">
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-dark w-100">
+            Search
+        </button>
+    </div>
+</form>
+
+<div class="card">
+    <div class="card-body p-0">
+        {% if logs %}
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Description</th>
+                        <th>IP Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td>{{ log.timestamp }}</td>
+                        <td>{{ log.username or 'System' }}</td>
+                        <td>{{ log.action }}</td>
+                        <td>{{ log.description }}</td>
+                        <td>{{ log.ip_address or 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-muted p-3 mb-0">
+            No logs found.
+        </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
