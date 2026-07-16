@@ -5,6 +5,12 @@
 #### Description:
 
 SecureTracker is a secure case and evidence management system built with Flask, SQLite, and CS50's SQL library. It is designed for law enforcement and investigative teams to manage cases, track evidence with chain of custody, and maintain audit logs of all user actions.
+ 
+## Why I Built This
+ 
+Proper case and evidence management software — the kind with role-based access, chain-of-custody tracking, and audit logging — is usually priced for large organizations with large budgets. Small investigative teams need the same rigor but rarely have access to it. I built SecureTracker so that any small team can self-host a genuinely secure, auditable system without paying for an enterprise license.
+ 
+**Note:** This project was originally submitted as my final project for [Harvard's CS50](https://cs50.harvard.edu/x).
 
 
 ## Features
@@ -36,7 +42,7 @@ SecureTracker is a secure case and evidence management system built with Flask, 
 
    ```bash
     git clone https://github.com/shenolfernando2007/securetracker.git
-    cd securetracker
+    cd SecureTracker
    ```
 
 2. **Install dependencies**:
